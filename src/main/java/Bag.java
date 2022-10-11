@@ -15,10 +15,10 @@ public abstract class Bag {
      *       - an int named capacity
      *       - an array of Strings named contents
      */
-    String color;
-    int numberOfContents=0;
-    int capacity=0;
-    ArrayList<String> contents=new ArrayList<String>();
+    private String color;
+    private int numberOfContents=0;
+    private int capacity=0;
+    private ArrayList<String> contents;
 
     public Bag(String color, int capacity) {
     }
@@ -36,8 +36,8 @@ public abstract class Bag {
     public void Bag(String color, int capacity){
         this.color = color;
         this.capacity = capacity;
-        this.numberOfContents = numberOfContents;
-        this.contents = contents;
+        this.numberOfContents = 0;
+        this.contents = new ArrayList<String>();;
     }
 
 
@@ -83,7 +83,7 @@ public abstract class Bag {
     public boolean addItem(String item){
         if (this.getNumberOfContents() < this.getCapacity()){
             this.numberOfContents += 1;
-            this.contents.add(item);
+            this.contents.add(this.numberOfContents - 1, item);
             return true;
         }
         return false;
@@ -103,10 +103,14 @@ public abstract class Bag {
      * @return
      */
     public String popItem(){
-        String pop_item = this.contents.get(this.getNumberOfContents()-1);
-        this.contents.remove(this.getNumberOfContents()-1);
-        this.numberOfContents -=1;
-        return pop_item;
+        if (this.numberOfContents == 0){
+            return null;
+        } else {
+            String item_removed = this.contents.get(this.contents.size() - 1);
+            this.contents.remove(this.contents.size() - 1);
+            this.numberOfContents--;
+            return item_removed;
+        }
     }
 
 
